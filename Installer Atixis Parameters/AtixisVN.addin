@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>ATIXIS VN</Name>
+		<Assembly>C:\ProgramData\Atixis VN\Revit_ART_ParametresPartages.dll</Assembly>
+		<AddInId>85794937-99E6-43DF-8F27-5091C42AA3DE</AddInId>
+		<FullClassName>Revit_ART_ParametresPartages.Application</FullClassName>
+		<VendorId>Aviun</VendorId>
+		<Publisher>Aviun</Publisher>
+		<VendorDescription>ATIXIS VN</VendorDescription>
+	</AddIn>
+</RevitAddIns>

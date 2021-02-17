@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" 
+			 Name="Installer_Atixis_Parameters" 
+			 Language="1033" 
+			 Version="1.0.0.0" 
+			 Manufacturer="Aviun" 
+			 UpgradeCode="5b519dea-5ed2-4417-a8a0-80b38e088549">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="Installer_Atixis_Parameters" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="AtixisVN_Addin"/>
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="CommonAppDataFolder">
+				<Directory Id="INSTALLFOLDER" Name="Atixis VN" />
+				<Directory Id="ASDK" Name="Autodesk">
+					<Directory Id="RVT" Name="Revit">
+						<Directory Id="ADDIN" Name="Addins">
+							<Directory Id="V2018" Name="2018"/>
+							<Directory Id="V2019" Name="2019"/>
+							<Directory Id="V2020" Name="2020"/>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<Component Id="ProductComponent" Guid="EBBCC4B1-8EA5-42FE-997E-E9EF882D04C4">
+				<File Source="$(var.Revit_ART_ParametresPartages.TargetPath)" />
+			</Component>
+		</ComponentGroup>
+
+		<DirectoryRef Id="V2018">
+			<Component Id="AtixisVN_Addin" Guid="04934613-1A98-456D-950B-7E094060AAD0">
+				<File Source="AtixisVN.addin">
+					<CopyFile Id="CopyAddinFile1" DestinationDirectory="V2019"/>
+					<CopyFile Id="CopyAddinFile2" DestinationDirectory="V2020"/>
+				</File>
+			</Component>
+		</DirectoryRef>
+	</Fragment>
+	
+</Wix>
