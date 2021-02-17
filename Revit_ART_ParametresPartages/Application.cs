@@ -291,11 +291,11 @@ namespace Revit_ART_ParametresPartages
             replaceButton.SetContextualHelp(contextHelp);
             removeButton.SetContextualHelp(contextHelp);
             pdButtonData.SetContextualHelp(contextHelp);
-            // Reflection of path to image 
-            string imagePath = Path.GetDirectoryName(thisAssemblyPath) + @"\ParametresPartages.png";
-            Uri uriImage = new Uri(imagePath, UriKind.RelativeOrAbsolute);
-            BitmapImage largeimage = new BitmapImage(uriImage);
-            pdButton.LargeImage = largeimage;
+            //// Reflection of path to image 
+            //string imagePath = Path.GetDirectoryName(thisAssemblyPath) + @"\ParametresPartages.ico";
+            //Uri uriImage = new Uri(imagePath, UriKind.RelativeOrAbsolute);
+            //BitmapImage largeimage = new BitmapImage(uriImage);
+            pdButton.LargeImage = ResourceImage.GetIcon("ParametresPartages.ico");
 
             //#region Visible of plugin
             //XmlDocument doc = new XmlDocument();
