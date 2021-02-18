@@ -326,7 +326,7 @@ namespace Revit_ART_ParametresPartages
                 StreamWriter log = new StreamWriter(@"C:\Users\" + System.Environment.UserName + @"\AppData\Roaming\Autodesk\Revit\Addins\LogPPGChangements.txt", true);
                 Autodesk.Revit.ApplicationServices.Application revitApp = app.Application;
                 bool locked = false;
-                string dummyname = "ArteliaDummyParameter";
+                string dummyname = "AtixisDummyParameter";
                 switch (app.Application.Language)
                 {
                     case LanguageType.French:
@@ -353,56 +353,60 @@ namespace Revit_ART_ParametresPartages
                     foreach (string parameterName in disReplace.paramToReplace)
                     {
                         ExternalDefinition myExtDef = (ExternalDefinition)GetSharedParameterGroup(defFile, parameterName).Definitions.get_Item(parameterName);
-                        if (paramNameList.Contains(dummyname)) { dummyname = dummyname + i.ToString(); }
-                        if (paramNameList.Contains(parameterName))
+                        if(myExtDef!=null)
                         {
-                            var parameter = paramList[paramNameList.IndexOf(parameterName)];
-                            Transaction ts = new Transaction(familyDoc, "Replace Shared Parameter width Dummy Parameter"); // our transaction is to the family document, so familyDoc is used at each instance
-                            ts.Start();
-                            if (m_familyMgr.IsParameterLockable(parameter) && m_familyMgr.IsParameterLocked(parameter))
+                            if (paramNameList.Contains(dummyname)) { dummyname = dummyname + i.ToString(); }
+                            if (paramNameList.Contains(parameterName))
                             {
-                                m_familyMgr.SetParameterLocked(parameter, false);
-                                locked = true;
+                                var parameter = paramList[paramNameList.IndexOf(parameterName)];
+                                Transaction ts = new Transaction(familyDoc, "Replace Shared Parameter width Dummy Parameter"); // our transaction is to the family document, so familyDoc is used at each instance
+                                ts.Start();
+                                if (m_familyMgr.IsParameterLockable(parameter) && m_familyMgr.IsParameterLocked(parameter))
+                                {
+                                    m_familyMgr.SetParameterLocked(parameter, false);
+                                    locked = true;
+                                }
+                                FamilyParameter replace = m_familyMgr.ReplaceParameter(parameter, dummyname, BuiltInParameterGroup.INVALID, parameter.IsInstance);
+                                if (m_familyMgr.IsParameterLockable(replace) && locked)
+                                {
+                                    m_familyMgr.SetParameterLocked(replace, true);
+                                }
+                                ts.Commit();
+                                familyDoc.Save();
+                                locked = false;
                             }
-                            FamilyParameter replace = m_familyMgr.ReplaceParameter(parameter, dummyname, BuiltInParameterGroup.INVALID, parameter.IsInstance);
-                            if (m_familyMgr.IsParameterLockable(replace) && locked)
+                            ///Refresh List of Parameters
+                            var m_familyMgrRefreshed = familyDoc.FamilyManager;
+                            IList<FamilyParameter> paramListRefreshed = m_familyMgrRefreshed.GetParameters();
+                            var paramNameListRefreshed = paramListRefreshed.Cast<FamilyParameter>().Select(x => x.Definition.Name).ToList();
+                            ///Now we switch to the old parameter
+                            if (paramNameListRefreshed.Contains(dummyname))
                             {
-                                m_familyMgr.SetParameterLocked(replace, true);
+                                var parameterReal = paramListRefreshed[paramNameListRefreshed.IndexOf(dummyname)];
+                                ///Replace Dummy Parameter with The Real One
+                                Transaction ts = new Transaction(familyDoc, "Replace Dummy Parameter with The Real One"); // our transaction is to the family document, so familyDoc is used at each instance
+                                ts.Start();
+                                if (m_familyMgrRefreshed.IsParameterLockable(parameterReal) && m_familyMgr.IsParameterLocked(parameterReal))
+                                {
+                                    m_familyMgrRefreshed.SetParameterLocked(parameterReal, false);
+                                    locked = true;
+                                }
+                                FamilyParameter replace = m_familyMgr.ReplaceParameter(parameterReal, myExtDef, disReplace.builtParaGroupDic[disReplace.paramWhichReplace[i]], parameterReal.IsInstance);
+                                if (m_familyMgrRefreshed.IsParameterLockable(replace) && locked)
+                                {
+                                    m_familyMgrRefreshed.SetParameterLocked(replace, true);
+                                }
+                                ts.Commit();
+                                familyDoc.Save();
+                                if (log != null)
+                                {
+                                    log.WriteLine(disReplace.paramToReplace[i] + " <=> " + disReplace.paramWhichReplace[i]); // write the Transaction
+                                }
+                                locked = false;
                             }
-                            ts.Commit();
-                            familyDoc.Save();
-                            locked = false;
+                            i++;
                         }
-                        ///Refresh List of Parameters
-                        var m_familyMgrRefreshed = familyDoc.FamilyManager;
-                        IList<FamilyParameter> paramListRefreshed = m_familyMgrRefreshed.GetParameters();
-                        var paramNameListRefreshed = paramListRefreshed.Cast<FamilyParameter>().Select(x => x.Definition.Name).ToList();
-                        ///Now we switch to the old parameter
-                        if(paramNameListRefreshed.Contains(dummyname))
-                        {
-                            var parameterReal = paramListRefreshed[paramNameListRefreshed.IndexOf(dummyname)];
-                            ///Replace Dummy Parameter with The Real One
-                            Transaction ts = new Transaction(familyDoc, "Replace Dummy Parameter with The Real One"); // our transaction is to the family document, so familyDoc is used at each instance
-                            ts.Start();
-                            if (m_familyMgrRefreshed.IsParameterLockable(parameterReal) && m_familyMgr.IsParameterLocked(parameterReal))
-                            {
-                                m_familyMgrRefreshed.SetParameterLocked(parameterReal, false);
-                                locked = true;
-                            }
-                            FamilyParameter replace = m_familyMgr.ReplaceParameter(parameterReal, myExtDef, disReplace.builtParaGroupDic[disReplace.paramWhichReplace[i]], parameterReal.IsInstance);
-                            if (m_familyMgrRefreshed.IsParameterLockable(replace) && locked)
-                            {
-                                m_familyMgrRefreshed.SetParameterLocked(replace, true);
-                            }
-                            ts.Commit();
-                            familyDoc.Save();
-                            if (log != null)
-                            {
-                                log.WriteLine(disReplace.paramToReplace[i] + " <=> " + disReplace.paramWhichReplace[i]); // write the Transaction
-                            }
-                            locked = false;
-                        }
-                        i++;
+                        else { MessageBox.Show("Can only replace Shared Parameters belong to Current Shared Parameters File"); }
                     }
                     log.WriteLine("");
                     familyDoc.Close();

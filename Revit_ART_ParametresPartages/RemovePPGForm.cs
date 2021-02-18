@@ -317,7 +317,7 @@ namespace Revit_ART_ParametresPartages
 
         private void LinkConnect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://connect.arteliagroup.com/community/user-group-bim/revit-user-group");
+            System.Diagnostics.Process.Start("https://struct-wanderer.github.io/");
         }
 
         //return the list of files'adresses which need to be added parameter

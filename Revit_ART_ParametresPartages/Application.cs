@@ -71,7 +71,7 @@ namespace Revit_ART_ParametresPartages
                 { "formLabel2Text", "Select shared parameters in :" },
                 { "formLabel3Text", "The following shared paramters will be configured :" },
                 { "formLabel5Text", "Group parameter under :" },
-                { "formLinkLabel1Text", "Connect Community Revit User Group" },
+                { "formLinkLabel1Text", "Connect Author" },
                 ///   - RadioButton
                 { "formRadioButton1Text", "Type" },
                 { "formRadioButton2Text", "Instance" },
@@ -123,7 +123,7 @@ namespace Revit_ART_ParametresPartages
                 { "rmFormGroupReplaceChoiceText", "List of parameters which will be removed" },
                 ///   - Form Labels
                 { "rFormLabelFamilyText", "Select files :" },
-                { "rFormLinkConnectText", "Connect Community Revit User Group" },
+                { "rFormLinkConnectText", "Connect Auteur" },
                 ///   - Form Radio Buttons
                 { "rFormRadioButtonAllText", "All Parameters" },
                 { "rFormRadioButtonSharedText", "Shared Parameters" },
@@ -286,7 +286,7 @@ namespace Revit_ART_ParametresPartages
             pdButton.AddPushButton(replaceGroupButton);
             pdButton.ToolTip = displayableText[appLang]["pullButtonDesc"];
             //help (when you press F1 on it)
-            ContextualHelp contextHelp = new ContextualHelp(ContextualHelpType.Url, "https://connect.arteliagroup.com/community/user-group-bim/revit-user-group");
+            ContextualHelp contextHelp = new ContextualHelp(ContextualHelpType.Url, "https://struct-wanderer.github.io/");
             button.SetContextualHelp(contextHelp);
             replaceButton.SetContextualHelp(contextHelp);
             removeButton.SetContextualHelp(contextHelp);

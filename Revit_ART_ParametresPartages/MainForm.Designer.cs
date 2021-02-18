@@ -282,7 +282,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(292, 529);
+            this.linkLabel1.Location = new System.Drawing.Point(53, 492);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(197, 13);
             this.linkLabel1.TabIndex = 42;
@@ -294,10 +294,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Revit_ART_ParametresPartages.Properties.Resources.Atixis;
-            this.pictureBox1.Location = new System.Drawing.Point(353, 492);
+            this.pictureBox1.Location = new System.Drawing.Point(600, 492);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(77, 32);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(130, 60);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 41;
             this.pictureBox1.TabStop = false;
             // 

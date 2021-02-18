@@ -260,7 +260,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1060, 720);
+            this.ClientSize = new System.Drawing.Size(788, 562);
             this.Controls.Add(this.groupFamilles);
             this.Controls.Add(this.groupPPGChoice);
             this.Controls.Add(this.groupReplaceChoice);

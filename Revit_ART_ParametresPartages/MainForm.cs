@@ -331,7 +331,7 @@ namespace Revit_ART_ParametresPartages
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://connect.arteliagroup.com/community/user-group-bim/revit-user-group");
+            System.Diagnostics.Process.Start("https://struct-wanderer.github.io/");
         }
     }
 }
