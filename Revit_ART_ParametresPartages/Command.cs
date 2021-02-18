@@ -352,9 +352,9 @@ namespace Revit_ART_ParametresPartages
                     int i = 0;
                     foreach (string parameterName in disReplace.paramToReplace)
                     {
-                        ExternalDefinition myExtDef = (ExternalDefinition)GetSharedParameterGroup(defFile, parameterName).Definitions.get_Item(parameterName);
-                        if(myExtDef!=null)
+                        try
                         {
+                            ExternalDefinition myExtDef = (ExternalDefinition)GetSharedParameterGroup(defFile, parameterName).Definitions.get_Item(parameterName);
                             if (paramNameList.Contains(dummyname)) { dummyname = dummyname + i.ToString(); }
                             if (paramNameList.Contains(parameterName))
                             {
@@ -406,7 +406,8 @@ namespace Revit_ART_ParametresPartages
                             }
                             i++;
                         }
-                        else { MessageBox.Show("Can only replace Shared Parameters belong to Current Shared Parameters File"); }
+                        catch { MessageBox.Show("Can only replace Shared Parameters belong to Current Shared Parameters File"); }
+
                     }
                     log.WriteLine("");
                     familyDoc.Close();
